@@ -4,8 +4,8 @@ namespace SubredditMonitor.Core.Interfaces
 {
     public interface ISubredditPostRepository
     {
-        public void UpsertResponsePosts(List<LinkDataList> newSubredditPosts);
-        public List<SubredditPost> GetAllPosts();
+        public void UpsertResponsePosts(string Subreddit, List<LinkDataList> newSubredditPosts);
+        public List<SubredditPost> GetAllPostsBySubreddit(string subreddit);
     }
 
 }

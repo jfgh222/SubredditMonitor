@@ -3,6 +3,7 @@
     public class SubredditPost
     {
         public string? PostID { get; set; }
+        public string? Subreddit { get; set; }
         public string? Title { get; set; }
         public string? AuthorUserId { get; set; }
         public string? AuthorName { get; set; }

@@ -21,18 +21,22 @@ namespace SubredditMonitor.Core.Services
         {
             Subreddit = subreddit;
             _subredditPostRetriever.SetSubreddit(subreddit);
+            _statusUpdater.SetSubreddit(subreddit);
         }
 
         public async void MonitorSubredditPosts()
         {
-            Console.WriteLine("Initialize monitoring of subreddit: [" + Subreddit + "]");
-
-            new Task(_statusUpdater.ShowStatusUpdates).Start();
-
-            while (true)
+            if (Subreddit != null)
             {
-                var postsSinceStart = await _subredditPostRetriever.RetrieveAllPostsSinceAppStart();
-                _subredditRepo.UpsertResponsePosts(postsSinceStart);
+                Console.WriteLine("Initialize monitoring of subreddit: [" + Subreddit + "]");
+
+                new Task(_statusUpdater.ShowStatusUpdates).Start();
+
+                while (true)
+                {
+                    var postsSinceStart = await _subredditPostRetriever.RetrieveAllPostsSinceAppStart();
+                    _subredditRepo.UpsertResponsePosts(Subreddit, postsSinceStart);
+                }
             }
         }
     }

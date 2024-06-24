@@ -6,6 +6,7 @@ namespace SubredditMonitor.Infrastructure.Messaging
 {
     public class StatusUpdater : IStatusUpdater
     {
+        private string? _subreddit;
         private ISubredditPostRepository _subredditPostRepo;
         private int DelayBetweenStatusUpdatesInSeconds { get; set; }
 
@@ -20,6 +21,11 @@ namespace SubredditMonitor.Infrastructure.Messaging
             : 10;
         }
 
+        public void SetSubreddit(string subreddit)
+        {
+            _subreddit = subreddit;
+        }
+
         public void ShowStatusUpdates()
         {
             var mostPostsUpdateMessage = "";
@@ -27,11 +33,11 @@ namespace SubredditMonitor.Infrastructure.Messaging
 
             Console.WriteLine(Environment.NewLine);
 
-            while (true)
+            while (true && !string.IsNullOrWhiteSpace(_subreddit))
             {
                 bool printedUpdate = false;
 
-                var allPosts = _subredditPostRepo.GetAllPosts();
+                var allPosts = _subredditPostRepo.GetAllPostsBySubreddit(_subreddit);
 
                 var latestMostPosts = GetMostProlificString(allPosts);
 
@@ -68,12 +74,13 @@ namespace SubredditMonitor.Infrastructure.Messaging
                 })
                 .OrderByDescending(a => a.count)
                 .FirstOrDefault();
+
             if (mostProlificAuthor != null && mostProlificAuthor.author != null && !string.IsNullOrWhiteSpace(mostProlificAuthor.author))
             {
                 var mostProlificAuthorPost = allPosts.FirstOrDefault(ap => ap.AuthorUserId == mostProlificAuthor.author);
                 if (mostProlificAuthorPost != null)
                 {
-                    return "Author with the most (" + mostProlificAuthor.count + ") posts: [" + mostProlificAuthorPost.AuthorName + "]" + Environment.NewLine;
+                    return "Author with the most (" + mostProlificAuthor.count + ") posts in subreddit '" + _subreddit + "': [" + mostProlificAuthorPost.AuthorName + "]" + Environment.NewLine;
                 }
             }
 
@@ -83,9 +90,10 @@ namespace SubredditMonitor.Infrastructure.Messaging
         private string GetMostUpvotesString(List<SubredditPost> allPosts)
         {
             var postWithMostUpvotes = allPosts.OrderByDescending(ap => ap.Upvotes).FirstOrDefault();
+
             if (postWithMostUpvotes != null)
             {
-                return "Post with the most (" + postWithMostUpvotes.Upvotes + ") upvotes: [" + postWithMostUpvotes.Title + "]";
+                return "Post with the most (" + postWithMostUpvotes.Upvotes + ") upvotes in subreddit '" + _subreddit + "': [" + postWithMostUpvotes.Title + "]";
             }
 
             return "";

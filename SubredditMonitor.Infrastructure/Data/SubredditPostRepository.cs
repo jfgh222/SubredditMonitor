@@ -8,12 +8,12 @@ public class SubredditPostRepository : ISubredditPostRepository
 {
     private List<SubredditPost> _allPosts = [];
     
-    public List<SubredditPost> GetAllPosts()
+    public List<SubredditPost> GetAllPostsBySubreddit(string subreddit)
     {
-        return _allPosts; 
+        return _allPosts.Where(ap => ap.Subreddit == subreddit).ToList(); 
     }
 
-    public void UpsertResponsePosts(List<LinkDataList> newSubredditPosts)
+    public void UpsertResponsePosts(string Subreddit, List<LinkDataList> newSubredditPosts)
     {
         foreach (var newPost in newSubredditPosts)
         {
@@ -25,7 +25,7 @@ public class SubredditPostRepository : ISubredditPostRepository
 
                 if (currPost == null)
                 {
-                    _allPosts.Add(MapRedditLinkDataToPostInfo.Map(linkData));
+                    _allPosts.Add(MapRedditLinkDataToPostInfo.Map(Subreddit, linkData));
                 }
                 else if (currPost.Upvotes != linkData.ups)
                 {

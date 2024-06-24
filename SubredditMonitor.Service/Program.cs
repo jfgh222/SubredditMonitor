@@ -8,10 +8,10 @@ using SubredditMonitor.Service;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddTransient<ISubredditMonitorWorker, SubredditMonitorWorker>();
-builder.Services.AddTransient<ISubredditPostRepository, SubredditPostRepository>();
-builder.Services.AddTransient<ISubredditPostRetriever, SubredditPostRetriever>();
 builder.Services.AddTransient<IStatusUpdater, StatusUpdater>();
+builder.Services.AddTransient<ISubredditPostRetriever, SubredditPostRetriever>();
+builder.Services.AddTransient<ISubredditMonitorWorker, SubredditMonitorWorker>();
+builder.Services.AddSingleton<ISubredditPostRepository, SubredditPostRepository>();
 
 builder.Services.AddHostedService<SubredditMonitorService>();
 
