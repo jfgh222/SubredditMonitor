@@ -1,8 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using SubredditMonitor.Core.Interfaces;
+﻿using SubredditMonitor.Core.Interfaces;
 using SubredditMonitor.Core.Services;
-using SubredditMonitor.Infrastructure.Data.Config;
 
 namespace SubredditMonitor.Service
 {
@@ -11,22 +8,22 @@ namespace SubredditMonitor.Service
         private static List<ISubredditMonitorWorker> AllSubreddits = [];
 
         private IServiceProvider _serviceProvider;
+        private IApplicationSettings _applicationSettings;
 
-        public SubredditMonitorService(IServiceProvider serviceProvider)
+        public SubredditMonitorService(IServiceProvider serviceProvider, IApplicationSettings applicationSettings)
         {
             _serviceProvider = serviceProvider;
+            _applicationSettings = applicationSettings;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             try
             {
-                var appSettings = new ApplicationSettings();
+                RedditOAuthToken.ConfigureRedditOAuth(_applicationSettings.GetSettingValue("ClientID"), _applicationSettings.GetSettingValue("ClientSecret"), _applicationSettings.GetSettingValue("RedditAuthUri"));
+                RedditApiRequest.SetRestClientOptions(_applicationSettings.GetSettingValue("RedditApiBaseUri"));
 
-                RedditOAuthToken.ConfigureRedditOAuth(appSettings.GetSettingValue("ClientID"), appSettings.GetSettingValue("ClientSecret"), appSettings.GetSettingValue("RedditAuthUri"));
-                RedditApiRequest.SetRestClientOptions(appSettings.GetSettingValue("RedditApiBaseUri"));
-
-                var allSubReddits = appSettings.GetSettingValue("Subreddit").Split(",");
+                var allSubReddits = _applicationSettings.GetSettingValue("Subreddit").Split(",");
 
                 foreach (var subreddit in allSubReddits)
                 {
@@ -47,7 +44,7 @@ namespace SubredditMonitor.Service
             }
             catch (Exception ex)
             {
-                Console.WriteLine("ERROR! Couldn't start SubredditMonitorService. Error was: [" + ex.ToString() + "]");
+                Console.WriteLine("ERROR! Couldn't start SubredditMonitorService. Error was: [" + ex.Message.ToString() + "]");
             }
         }
     }

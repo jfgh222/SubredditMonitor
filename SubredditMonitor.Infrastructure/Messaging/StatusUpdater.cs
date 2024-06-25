@@ -1,6 +1,5 @@
 ﻿using SubredditMonitor.Core.Entities;
 using SubredditMonitor.Core.Interfaces;
-using SubredditMonitor.Infrastructure.Data.Config;
 
 namespace SubredditMonitor.Infrastructure.Messaging
 {
@@ -10,11 +9,9 @@ namespace SubredditMonitor.Infrastructure.Messaging
         private ISubredditPostRepository _subredditPostRepo;
         private int DelayBetweenStatusUpdatesInSeconds { get; set; }
 
-        public StatusUpdater(ISubredditPostRepository subredditPostRepository)
+        public StatusUpdater(IApplicationSettings appSettings, ISubredditPostRepository subredditPostRepository)
         {
             _subredditPostRepo = subredditPostRepository;
-
-            var appSettings = new ApplicationSettings();
 
             DelayBetweenStatusUpdatesInSeconds = int.TryParse(appSettings.GetSettingValue("DelayBetweenStatusUpdatesInSeconds"), out int delay)
             ? DelayBetweenStatusUpdatesInSeconds = delay

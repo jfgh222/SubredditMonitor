@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubredditMonitor.Core", "Su
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubredditMonitor.Infrastructure", "SubredditMonitor.Infrastructure\SubredditMonitor.Infrastructure.csproj", "{51B31045-B793-49DE-A577-D92226E2A324}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubredditMonitor.Service", "SubredditMonitor.Service\SubredditMonitor.Service.csproj", "{648F81C4-3063-452A-ACB8-334627B4584C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubredditMonitor.Service", "SubredditMonitor.Service\SubredditMonitor.Service.csproj", "{2854F4E3-95B3-46B4-BD0E-D15835874192}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{51B31045-B793-49DE-A577-D92226E2A324}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51B31045-B793-49DE-A577-D92226E2A324}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51B31045-B793-49DE-A577-D92226E2A324}.Release|Any CPU.Build.0 = Release|Any CPU
-		{648F81C4-3063-452A-ACB8-334627B4584C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{648F81C4-3063-452A-ACB8-334627B4584C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{648F81C4-3063-452A-ACB8-334627B4584C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{648F81C4-3063-452A-ACB8-334627B4584C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2854F4E3-95B3-46B4-BD0E-D15835874192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2854F4E3-95B3-46B4-BD0E-D15835874192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2854F4E3-95B3-46B4-BD0E-D15835874192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2854F4E3-95B3-46B4-BD0E-D15835874192}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

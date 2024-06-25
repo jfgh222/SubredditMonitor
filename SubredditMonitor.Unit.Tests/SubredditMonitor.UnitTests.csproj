@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SubredditMonitor.Core\SubredditMonitor.Core.csproj" />
+    <ProjectReference Include="..\SubredditMonitor.Infrastructure\SubredditMonitor.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
