@@ -3,6 +3,6 @@
     public interface ISubredditMonitorWorker
     {
         public void MonitorSubredditPosts();
-        public void SetSubreddit(string subreddit);
+        public Task SetSubreddit(string subreddit);
     }
 }

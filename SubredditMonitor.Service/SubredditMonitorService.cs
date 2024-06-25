@@ -33,7 +33,7 @@ namespace SubredditMonitor.Service
                     var worker = _serviceProvider.GetService<ISubredditMonitorWorker>();
                     if (worker != null)
                     {
-                        worker.SetSubreddit(subreddit);
+                        await worker.SetSubreddit(subreddit);
                         AllSubreddits.Add(worker);
                     }
                 }

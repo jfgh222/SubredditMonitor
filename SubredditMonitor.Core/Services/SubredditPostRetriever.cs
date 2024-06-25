@@ -4,7 +4,7 @@ namespace SubredditMonitor.Core.Services
 {
     public interface ISubredditPostRetriever
     {
-        public void SetSubreddit(string subreddit);
+        public Task SetSubreddit(string subreddit);
         public Task<string> GetMostRecentPostID();
         public Task<List<LinkDataList>> RetrieveAllPostsSinceAppStart();
     }
@@ -17,10 +17,10 @@ namespace SubredditMonitor.Core.Services
         private string InitialPostBeforeValue => "t3_" + _firstPostID;
         private string AllPostsBeforeInitialRequestUri => _subreddit + "/new?before=" + InitialPostBeforeValue + "&limit=1000";
 
-        public void SetSubreddit(string subbreddit)
+        public async Task SetSubreddit(string subbreddit)
         {
             _subreddit = subbreddit;
-            _firstPostID = GetMostRecentPostID().Result;
+            _firstPostID = await GetMostRecentPostID();
             if (string.IsNullOrWhiteSpace(_firstPostID)) throw new Exception("ERROR! No posts found on subreddit [" + _subreddit + "]");
         }
 

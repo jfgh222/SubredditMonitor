@@ -17,10 +17,10 @@ namespace SubredditMonitor.Core.Services
             _statusUpdater = statusUpdater;
         }
 
-        public void SetSubreddit(string subreddit)
+        public async Task SetSubreddit(string subreddit)
         {
             Subreddit = subreddit;
-            _subredditPostRetriever.SetSubreddit(subreddit);
+            await _subredditPostRetriever.SetSubreddit(subreddit);
             _statusUpdater.SetSubreddit(subreddit);
         }
 
